@@ -1,0 +1,35 @@
+# Cookbook Backend
+
+Simple Spring Boot backend for recipe endpoints.
+
+## Run Locally
+
+Use these commands (your existing local flow):
+
+1. Compile:
+
+mvn clean compile
+
+2. Start the app:
+
+mvn spring-boot:run
+
+## Run Tests
+
+Run all tests:
+
+mvn test
+
+Or with the Maven wrapper:
+
+./mvnw test
+
+## Compile Check (No Tests)
+
+Use this to quickly verify there are no compilation errors:
+
+mvn clean compile
+
+Or with the Maven wrapper:
+
+./mvnw clean compile
