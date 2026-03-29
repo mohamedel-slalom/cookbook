@@ -53,6 +53,9 @@ public class RecipeService {
 		if (patchRecipe.getDescription() != null) {
 			existingRecipe.setDescription(patchRecipe.getDescription());
 		}
+		if (patchRecipe.getIsFavorite() != null) {
+			existingRecipe.setIsFavorite(patchRecipe.getIsFavorite());
+		}
 		if (patchRecipe.getServingsCount() != null) {
 			existingRecipe.setServingsCount(patchRecipe.getServingsCount());
 		}
@@ -108,6 +111,9 @@ public class RecipeService {
 		}
 		if (recipe.getTags() == null) {
 			recipe.setTags(List.of());
+		}
+		if (recipe.getIsFavorite() == null) {
+			recipe.setIsFavorite(false);
 		}
 	}
 }

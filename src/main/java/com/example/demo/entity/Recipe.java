@@ -29,6 +29,9 @@ public class Recipe {
 	@Column(name = "description", length = 1000)
 	private String description;
 
+	@Column(name = "is_favorite")
+	private Boolean isFavorite;
+
 	@Column(name = "servings_count")
 	private Integer servingsCount;
 
@@ -91,6 +94,14 @@ public class Recipe {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Boolean getIsFavorite() {
+		return isFavorite;
+	}
+
+	public void setIsFavorite(Boolean isFavorite) {
+		this.isFavorite = isFavorite;
 	}
 
 	public Integer getServingsCount() {
