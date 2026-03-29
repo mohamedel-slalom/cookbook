@@ -96,8 +96,8 @@ class RecipeServiceTest {
 		Recipe recipe = new Recipe();
 		recipe.setTitle("Tomato Pasta");
 		recipe.setDescription("Simple dinner");
+		recipe.setTime("30 min");
 		recipe.setServingsCount(2);
-		recipe.setTotalCookTime(30);
 		recipe.setIngredients(List.of("200g pasta", "1 cup tomato sauce"));
 		recipe.setSteps(List.of("Boil pasta", "Add sauce"));
 		recipe.setImages(List.of("https://example.com/pasta.jpg"));

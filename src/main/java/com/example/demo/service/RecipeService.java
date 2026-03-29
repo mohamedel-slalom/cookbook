@@ -53,14 +53,23 @@ public class RecipeService {
 		if (patchRecipe.getDescription() != null) {
 			existingRecipe.setDescription(patchRecipe.getDescription());
 		}
+		if (patchRecipe.getCuisine() != null) {
+			existingRecipe.setCuisine(patchRecipe.getCuisine());
+		}
+		if (patchRecipe.getDifficulty() != null) {
+			existingRecipe.setDifficulty(patchRecipe.getDifficulty());
+		}
+		if (patchRecipe.getTime() != null) {
+			existingRecipe.setTime(patchRecipe.getTime());
+		}
+		if (patchRecipe.getImageUrl() != null) {
+			existingRecipe.setImageUrl(patchRecipe.getImageUrl());
+		}
 		if (patchRecipe.getIsFavorite() != null) {
 			existingRecipe.setIsFavorite(patchRecipe.getIsFavorite());
 		}
 		if (patchRecipe.getServingsCount() != null) {
 			existingRecipe.setServingsCount(patchRecipe.getServingsCount());
-		}
-		if (patchRecipe.getTotalCookTime() != null) {
-			existingRecipe.setTotalCookTime(patchRecipe.getTotalCookTime());
 		}
 		if (patchRecipe.getIngredients() != null && !patchRecipe.getIngredients().isEmpty()) {
 			existingRecipe.setIngredients(patchRecipe.getIngredients());
@@ -97,8 +106,8 @@ public class RecipeService {
 		if (recipe.getServingsCount() == null || recipe.getServingsCount() <= 0) {
 			throw new IllegalArgumentException("ServingsCount must be greater than 0");
 		}
-		if (recipe.getTotalCookTime() == null || recipe.getTotalCookTime() < 0) {
-			throw new IllegalArgumentException("TotalCookTime must be 0 or greater");
+		if (recipe.getTime() == null || recipe.getTime().isBlank()) {
+			throw new IllegalArgumentException("Time label is required");
 		}
 		if (recipe.getIngredients() == null || recipe.getIngredients().isEmpty()) {
 			throw new IllegalArgumentException("Ingredients are required");

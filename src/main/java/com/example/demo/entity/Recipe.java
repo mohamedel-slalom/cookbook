@@ -29,14 +29,23 @@ public class Recipe {
 	@Column(name = "description", length = 1000)
 	private String description;
 
+	@Column(name = "cuisine", length = 100)
+	private String cuisine;
+
+	@Column(name = "difficulty", length = 50)
+	private String difficulty;
+
+	@Column(name = "time_label", length = 50)
+	private String time;
+
+	@Column(name = "image_url", length = 2048)
+	private String imageUrl;
+
 	@Column(name = "is_favorite")
 	private Boolean isFavorite;
 
 	@Column(name = "servings_count")
 	private Integer servingsCount;
-
-	@Column(name = "total_cook_time")
-	private Integer totalCookTime;
 
 	@Column(name = "ingredients", length = 4000)
 	@Convert(converter = StringListConverter.class)
@@ -96,6 +105,38 @@ public class Recipe {
 		this.description = description;
 	}
 
+	public String getCuisine() {
+		return cuisine;
+	}
+
+	public void setCuisine(String cuisine) {
+		this.cuisine = cuisine;
+	}
+
+	public String getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(String difficulty) {
+		this.difficulty = difficulty;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
 	public Boolean getIsFavorite() {
 		return isFavorite;
 	}
@@ -110,14 +151,6 @@ public class Recipe {
 
 	public void setServingsCount(Integer servingsCount) {
 		this.servingsCount = servingsCount;
-	}
-
-	public Integer getTotalCookTime() {
-		return totalCookTime;
-	}
-
-	public void setTotalCookTime(Integer totalCookTime) {
-		this.totalCookTime = totalCookTime;
 	}
 
 	public List<String> getIngredients() {

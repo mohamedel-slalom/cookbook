@@ -53,7 +53,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"title\": \"Chicken Stir Fry\",\n  \"description\": \"Quick weekday dinner\",\n  \"isFavorite\": true,\n  \"servingsCount\": 2,\n  \"totalCookTime\": 25,\n  \"ingredients\": [\"300g chicken\", \"1 bell pepper\", \"2 tbsp soy sauce\"],\n  \"steps\": [\"Slice ingredients\", \"Stir-fry chicken\", \"Add vegetables and sauce\"],\n  \"images\": [\"https://example.com/chicken-stir-fry.jpg\"],\n  \"tags\": [\"dinner\", \"quick\"]\n}"
+          "raw": "{\n  \"title\": \"Chicken Stir Fry\",\n  \"description\": \"Quick weekday dinner\",\n  \"cuisine\": \"Asian\",\n  \"difficulty\": \"Easy\",\n  \"time\": \"25 min\",\n  \"imageUrl\": \"https://example.com/chicken-stir-fry.jpg\",\n  \"isFavorite\": true,\n  \"servingsCount\": 2,\n  \"ingredients\": [\"300g chicken\", \"1 bell pepper\", \"2 tbsp soy sauce\"],\n  \"steps\": [\"Slice ingredients\", \"Stir-fry chicken\", \"Add vegetables and sauce\"],\n  \"images\": [\"https://example.com/chicken-stir-fry.jpg\"],\n  \"tags\": [\"dinner\", \"quick\"]\n}"
         },
         "url": {
           "raw": "{{baseUrl}}/api/recipes/createRecipe",
@@ -80,7 +80,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"title\": \"Chicken Stir Fry (Updated)\",\n  \"isFavorite\": false,\n  \"totalCookTime\": 30\n}"
+          "raw": "{\n  \"title\": \"Chicken Stir Fry (Updated)\",\n  \"time\": \"30 min\",\n  \"isFavorite\": false\n}"
         },
         "url": {
           "raw": "{{baseUrl}}/api/recipes/patchRecipe/{{recipeId}}",

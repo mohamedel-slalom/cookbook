@@ -26,14 +26,14 @@ class RecipeControllerIntegrationTest {
 	void shouldSupportBasicRecipeApiFlow() throws Exception {
 		HttpResponse<String> listResponse = sendRequest("GET", "/api/recipes", null);
 		assertEquals(200, listResponse.statusCode());
-		assertTrue(listResponse.body().contains("Classic Pancakes"));
+		assertTrue(listResponse.body().contains("Blueberry Pancakes"));
 
 		String createPayload = """
 			{
 			  "title": "Integration Test Recipe",
 			  "description": "Integration recipe",
+			  "time": "22 min",
 			  "servingsCount": 3,
-			  "totalCookTime": 22,
 			  "ingredients": ["1 cup rice", "2 cups water"],
 			  "steps": ["Boil water", "Cook rice"],
 			  "images": ["https://example.com/rice.jpg"],
@@ -54,7 +54,7 @@ class RecipeControllerIntegrationTest {
 		String patchPayload = """
 			{
 			  "title": "Integration Recipe Updated",
-			  "totalCookTime": 25
+			  "time": "25 min"
 			}
 			""";
 		HttpResponse<String> patchResponse = sendRequest("PATCH", "/api/recipes/patchRecipe/" + recipeId, patchPayload);
