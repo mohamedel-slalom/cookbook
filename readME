@@ -1,6 +1,48 @@
 # Cookbook Backend
 
-Simple Spring Boot backend for recipe endpoints.
+Simple Spring Boot backend for recipe endpoints with JWT authentication.
+
+## Authentication
+
+### Login Endpoint
+
+**POST** `http://localhost:8080/api/auth/login`
+
+Body:
+```json
+{
+  "username": "admin",
+  "password": "admin123"
+}
+```
+
+Response:
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9..."
+}
+```
+
+### Use Token
+
+All recipe endpoints now require authentication. Pass the JWT token in the `Authorization` header:
+
+```
+Authorization: Bearer <your_token_here>
+```
+
+Example:
+```bash
+curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9..." \
+  http://localhost:8080/api/recipes
+```
+
+**Default Credentials:**
+- Username: `admin`
+- Password: `admin123`
+- Role: `ADMIN`
+
+All recipe endpoints (`GET`, `POST`, `PATCH`, `DELETE`) require `ADMIN` role.
 
 ## Run Locally
 
