@@ -1,3 +1,11 @@
+-- Seed admin user with BCrypt hashed password "admin123"
+-- Password hash generated with: BCryptPasswordEncoder().encode("admin123")
+INSERT INTO users (username, password, role) VALUES (
+	'admin',
+	'$2a$10$hKDArB0Fs7tK6sx6IYS55uL2zrIvktWLnut9IFle7a/q4Gar3p1Wy',
+	'ADMIN'
+);
+
 INSERT INTO recipes (
 	id,
 	title,

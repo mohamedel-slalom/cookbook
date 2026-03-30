@@ -1,0 +1,189 @@
+{
+  "info": {
+    "_postman_id": "c9f0e8d2-5c1b-4a9e-8b3f-1a2c3d4e5f6g",
+    "name": "Auth API",
+    "description": "Authentication endpoints for Cookbook API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get All Recipes (Protected)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/recipes",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "recipes"
+          ]
+        }
+      },
+      "description": "Get all recipes. Requires valid JWT token from login."
+    },
+    {
+      "name": "Get Recipe by ID (Protected)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/recipes/{{recipeId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "recipes",
+            "{{recipeId}}"
+          ]
+        }
+      },
+      "description": "Get a specific recipe by ID. Requires valid JWT token."
+    },
+    {
+      "name": "Create Recipe (Protected)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Chicken Stir Fry\",\n  \"description\": \"Quick weekday dinner\",\n  \"cuisine\": \"Asian\",\n  \"difficulty\": \"Easy\",\n  \"time\": \"25 min\",\n  \"imageUrl\": \"https://example.com/chicken-stir-fry.jpg\",\n  \"isFavorite\": true,\n  \"servingsCount\": 2,\n  \"ingredients\": [\"300g chicken\", \"1 bell pepper\", \"2 tbsp soy sauce\"],\n  \"steps\": [\"Slice ingredients\", \"Stir-fry chicken\", \"Add vegetables and sauce\"],\n  \"images\": [\"https://example.com/chicken-stir-fry.jpg\"],\n  \"tags\": [\"dinner\", \"quick\"]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/recipes/createRecipe",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "recipes",
+            "createRecipe"
+          ]
+        }
+      },
+      "description": "Create a new recipe. Requires valid JWT token with ADMIN role."
+    },
+    {
+      "name": "Update Recipe (Protected)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Chicken Stir Fry (Updated)\",\n  \"time\": \"30 min\",\n  \"isFavorite\": false\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/recipes/patchRecipe/{{recipeId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "recipes",
+            "patchRecipe",
+            "{{recipeId}}"
+          ]
+        }
+      },
+      "description": "Partially update a recipe. Requires valid JWT token with ADMIN role."
+    },
+    {
+      "name": "Delete Recipe (Protected)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/recipes/deleteRecipe/{{recipeId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "recipes",
+            "deleteRecipe",
+            "{{recipeId}}"
+          ]
+        }
+      },
+      "description": "Delete a recipe. Requires valid JWT token with ADMIN role."
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "description": "JWT token from login. Copy the token value from the login response and paste here."
+    },
+    {
+      "key": "recipeId",
+      "value": "1"
+    }
+  ]
+}

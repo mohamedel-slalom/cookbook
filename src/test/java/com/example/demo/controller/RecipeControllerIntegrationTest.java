@@ -10,9 +10,13 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+
+import com.example.demo.security.JwtUtil;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class RecipeControllerIntegrationTest {
@@ -22,9 +26,19 @@ class RecipeControllerIntegrationTest {
 
 	private final HttpClient httpClient = HttpClient.newHttpClient();
 
+	@Autowired
+	private JwtUtil jwtUtil;
+
+	private String adminToken;
+
+	@BeforeEach
+	void setUp() {
+		adminToken = jwtUtil.generateToken("admin", "ADMIN");
+	}
+
 	@Test
 	void shouldSupportBasicRecipeApiFlow() throws Exception {
-		HttpResponse<String> listResponse = sendRequest("GET", "/api/recipes", null);
+		HttpResponse<String> listResponse = sendRequest("GET", "/api/recipes", null, adminToken);
 		assertEquals(200, listResponse.statusCode());
 		assertTrue(listResponse.body().contains("Blueberry Pancakes"));
 
@@ -41,13 +55,13 @@ class RecipeControllerIntegrationTest {
 			}
 			""";
 
-		HttpResponse<String> createResponse = sendRequest("POST", "/api/recipes/createRecipe", createPayload);
+		HttpResponse<String> createResponse = sendRequest("POST", "/api/recipes/createRecipe", createPayload, adminToken);
 		assertEquals(201, createResponse.statusCode());
 
 		int recipeId = extractId(createResponse.body());
 		assertTrue(recipeId > 0);
 
-		HttpResponse<String> getByIdResponse = sendRequest("GET", "/api/recipes/" + recipeId, null);
+		HttpResponse<String> getByIdResponse = sendRequest("GET", "/api/recipes/" + recipeId, null, adminToken);
 		assertEquals(200, getByIdResponse.statusCode());
 		assertTrue(getByIdResponse.body().contains("Integration Test Recipe"));
 
@@ -57,26 +71,32 @@ class RecipeControllerIntegrationTest {
 			  "time": "25 min"
 			}
 			""";
-		HttpResponse<String> patchResponse = sendRequest("PATCH", "/api/recipes/patchRecipe/" + recipeId, patchPayload);
+		HttpResponse<String> patchResponse = sendRequest("PATCH", "/api/recipes/patchRecipe/" + recipeId, patchPayload, adminToken);
 		assertEquals(200, patchResponse.statusCode());
 		assertTrue(patchResponse.body().contains("Integration Recipe Updated"));
 
-		HttpResponse<String> deleteResponse = sendRequest("DELETE", "/api/recipes/deleteRecipe/" + recipeId, null);
+		HttpResponse<String> deleteResponse = sendRequest("DELETE", "/api/recipes/deleteRecipe/" + recipeId, null, adminToken);
 		assertEquals(200, deleteResponse.statusCode());
 
-		HttpResponse<String> afterDeleteResponse = sendRequest("GET", "/api/recipes/" + recipeId, null);
+		HttpResponse<String> afterDeleteResponse = sendRequest("GET", "/api/recipes/" + recipeId, null, adminToken);
 		assertEquals(404, afterDeleteResponse.statusCode());
 	}
 
-	private HttpResponse<String> sendRequest(String method, String path, String body)
+	private HttpResponse<String> sendRequest(String method, String path, String body, String token)
 			throws IOException, InterruptedException {
 		HttpRequest.BodyPublisher publisher = body == null
 			? HttpRequest.BodyPublishers.noBody()
 			: HttpRequest.BodyPublishers.ofString(body);
 
-		HttpRequest request = HttpRequest.newBuilder()
+		HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
 			.uri(URI.create(baseUrl() + path))
-			.header("Content-Type", "application/json")
+			.header("Content-Type", "application/json");
+
+		if (token != null) {
+			requestBuilder.header("Authorization", "Bearer " + token);
+		}
+
+		HttpRequest request = requestBuilder
 			.method(method, publisher)
 			.build();
 

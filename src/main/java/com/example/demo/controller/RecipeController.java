@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,6 +27,7 @@ public class RecipeController {
 	private RecipeService recipeService;
 
 	@GetMapping
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<List<Recipe>> getAllRecipes() {
 		try {
 			List<Recipe> recipes = recipeService.getAllRecipes();
@@ -35,8 +37,7 @@ public class RecipeController {
 		}
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Recipe> getRecipeById(@PathVariable("id") Integer id) {
+	@GetMapping("/{id}")	@PreAuthorize("hasRole('ADMIN')")	public ResponseEntity<Recipe> getRecipeById(@PathVariable("id") Integer id) {
 		try {
 			Optional<Recipe> recipeData = recipeService.getRecipeById(id);
 			if (recipeData.isPresent()) {
@@ -48,8 +49,7 @@ public class RecipeController {
 		}
 	}
 
-	@PostMapping("/createRecipe")
-	public ResponseEntity<?> createRecipe(@RequestBody Recipe recipe) {
+	@PostMapping("/createRecipe")	@PreAuthorize("hasRole('ADMIN')")	public ResponseEntity<?> createRecipe(@RequestBody Recipe recipe) {
 		try {
 			Recipe savedRecipe = recipeService.createRecipe(recipe);
 			return new ResponseEntity<>(savedRecipe, HttpStatus.CREATED);
@@ -61,6 +61,7 @@ public class RecipeController {
 	}
 
 	@PatchMapping("/patchRecipe/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> patchRecipe(@PathVariable("id") Integer id, @RequestBody Recipe recipe) {
 		try {
 			Recipe updatedRecipe = recipeService.patchRecipe(id, recipe);
@@ -73,6 +74,7 @@ public class RecipeController {
 	}
 
 	@DeleteMapping("/deleteRecipe/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> deleteRecipe(@PathVariable("id") Integer id) {
 		try {
 			recipeService.deleteRecipe(id);
